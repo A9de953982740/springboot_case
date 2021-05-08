@@ -1,0 +1,32 @@
+server:
+  port: 10001
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 192.168.233.128
+    post: 6379
+  boot:
+    admin:
+      client:
+        url: http://localhost:8769   # 指定注册地址 , 即项目springboot-admin-server的服务端口，产生的数据交给它展示
+
+mybatis:
+  type-aliases-package: com.atguigu.pojo
+
+#management指管理，endpoints指端点，如要监控springboot项目，则springboot就是一个端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  # 对外暴露的访问入口 , 默认是/health和/info。即将微服务的健康情况暴露出去，既可以通过http请求访问健康状态以及项目的信息
+      base-path: /monitor # 默认是actuator，基础路径
+  endpoint:
+    health:
+      show-details: ALWAYS	# 显示所有健康状态
+  server:
+    port: 9999  # 通过端口9999的健康监控平台监控当前项目（端口：10001）
